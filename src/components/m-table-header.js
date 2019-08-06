@@ -12,12 +12,13 @@ import { Droppable, Draggable } from 'react-beautiful-dnd';
 
 export class MTableHeader extends React.Component {
   renderHeader() {
-    const mapArr = this.props.columns.filter(columnDef => !columnDef.hidden && !(columnDef.tableData.groupOrder > -1))
+    const mapArr = this.props.columns.filter(columnDef => !(columnDef.tableData.groupOrder > -1))
       .sort((a, b) => a.tableData.columnOrder - b.tableData.columnOrder)
       .map((columnDef, index) => {
+        if (columnDef.hidden) return;
         let content = columnDef.title;
 
-        if(this.props.draggable) {
+        if (this.props.draggable) {
           content = (
             <Draggable
               key={columnDef.tableData.id}
